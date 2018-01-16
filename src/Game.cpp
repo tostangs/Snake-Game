@@ -33,9 +33,9 @@ void Setup() {
 
 	// The creation of the location of the fruit...
 	srand(time(NULL));
-	fruitX = rand()%(19);
+	fruitX = rand()%(18)+1;
 	srand(time(NULL));
-	fruitY = rand()%(19);
+	fruitY = rand()%(18)+1;
 	score = 0;
 }
 
@@ -164,6 +164,20 @@ void Logic() {
 	}
 }
 
+void reset() {
+
+	x = width/2;
+	y = width/2;
+
+	for (int i = 0; i < nTails; ++i) {
+		tailX[i] = NULL;
+		tailY[i] = NULL;
+	}
+
+	nTails = 0;
+	score = 0;
+
+}
 
 // Honestly this function might be totally useless...  ( I copied it from online to see if it's more efficient than system("CLS"), probably not though... )
 void ClearScreen (void) {
