@@ -28,22 +28,37 @@ void Setup() {
 	beginGame = true;
 	gameOver = false;
 	dir = STOP;
-	x = width / 2;
-	y = height / 2;
+	x = width/2;
+	y = height/2;
 
-	// The creation of the location of the fruit...
-	srand(time(NULL));
-	fruitX = rand()%(18)+1;
-	srand(time(NULL));
-	fruitY = rand()%(18)+1;
+	// This creates the original location of the fruit...
+	bool created;
+
+	do {
+		created = true;
+		// The creation of the location of the fruit without it being inside of the tail or head...
+		srand(time(NULL));
+		fruitX = rand()%(18)+1;
+		srand(time(NULL));
+		fruitY = rand()%(18)+1;
+
+		for (int i = 1; i < nTails; i++) {
+			if ((tailX[i] == fruitX && tailY[i] == fruitY) || (x == fruitX && y == fruitY)) {
+				created = false;
+			}
+
+		}
+
+	} while(!created);
 	score = 0;
 }
+
 
 void Draw() {
 
 	// This is the startup screen in the beginning of the game... :)
 	if (beginGame) {
-		cout << "Press any button to play :)" << endl;
+		cout << "Press any button to play :)" << endl << endl;
 		system ("PAUSE");
 		beginGame = false;
 	}
@@ -152,16 +167,26 @@ void Logic() {
 	if(x == fruitX && y == fruitY) {
 
 		// Increases the score by 10, then generates another position for the fruit and adds a segment to the tail...
-		score += 10;
+		bool created;
 		nTails++;
-		srand(time(NULL));
-		fruitX = rand()%(18)+1;
-		srand(time(NULL));
-		fruitY = rand()%(18)+1;
+		score += 10;
+		do {
 
-		// This is to test whether the candy is at the right location
-		// cout << "new X " << fruitX << " & new Y" << fruitY << endl;
-		// system("PAUSE");
+			created = true;
+			// The creation of the location of the fruit without it being inside of the tail or head...
+			srand(time(NULL));
+			fruitX = rand()%(18)+1;
+			srand(time(NULL));
+			fruitY = rand()%(18)+1;
+
+			for (int i = 1; i < nTails; i++) {
+				if ((tailX[i] == fruitX && tailY[i] == fruitY) || (x == fruitX && y == fruitY)) {
+					created = false;
+				}
+
+			}
+
+		} while(!created);
 	}
 }
 
@@ -174,35 +199,10 @@ void reset() {
 		tailX[i] = NULL;
 		tailY[i] = NULL;
 	}
-
+//	CreateFruitLoc();
 	nTails = 0;
 	score = 0;
 
-}
-
-// Honestly this function might be totally useless...  ( I copied it from online to see if it's more efficient than system("CLS"), probably not though... )
-// Yeah this function isn't even used in the program but it adds lines so it makes me feel cooler :)...
-void ClearScreen (void) {
-	DWORD n;                         /* Number of characters written */
-	DWORD size;                      /* number of visible characters */
-	COORD coord = {0};               /* Top left screen position */
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-
-	/* Get a handle to the console */
-	HANDLE h = GetStdHandle ( STD_OUTPUT_HANDLE );
-
-	GetConsoleScreenBufferInfo ( h, &csbi );
-
-	/* Find the number of characters to overwrite */
-	size = csbi.dwSize.X * csbi.dwSize.Y;
-
-	/* Overwrite the screen buffer with whitespace */
-	FillConsoleOutputCharacter ( h, TEXT ( ' ' ), size, coord, &n );
-	GetConsoleScreenBufferInfo ( h, &csbi );
-	FillConsoleOutputAttribute ( h, csbi.wAttributes, size, coord, &n );
-
-	/* Reset the cursor to the top left position */
-	SetConsoleCursorPosition ( h, coord );
 }
 
 int main() {
@@ -215,7 +215,7 @@ int main() {
 		Setup();
 		while(!gameOver) {
 			Draw();
-			Sleep(10);
+			Sleep(50);
 			Input();
 			Logic();
 		}
