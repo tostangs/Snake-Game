@@ -1,5 +1,5 @@
 //============================================================================
-// Name        : Hello.cpp
+// Name        : WhatIsLifeHahahaha.cpp
 // Author      : Not me haha
 // Version     : idk honestly
 // Copyright   : Your copyright notice
@@ -51,6 +51,7 @@ void Draw() {
 	// This clears the screen... Though it's not very good lol I'm so lonely...
 	system ("CLS");
 
+	cout << endl << endl << "Score: " << score << endl;
 	// This is the logic to draw the 20x20 grid aka the barriers...
 	for(int j = 0 ; j < height ; ++j) {
 
@@ -154,9 +155,9 @@ void Logic() {
 		score += 10;
 		nTails++;
 		srand(time(NULL));
-		fruitX = rand()%(19);
+		fruitX = rand()%(18)+1;
 		srand(time(NULL));
-		fruitY = rand()%(19);
+		fruitY = rand()%(18)+1;
 
 		// This is to test whether the candy is at the right location
 		// cout << "new X " << fruitX << " & new Y" << fruitY << endl;
@@ -180,6 +181,7 @@ void reset() {
 }
 
 // Honestly this function might be totally useless...  ( I copied it from online to see if it's more efficient than system("CLS"), probably not though... )
+// Yeah this function isn't even used in the program but it adds lines so it makes me feel cooler :)...
 void ClearScreen (void) {
 	DWORD n;                         /* Number of characters written */
 	DWORD size;                      /* number of visible characters */
@@ -206,7 +208,7 @@ void ClearScreen (void) {
 int main() {
 
 	bool restart = false;
-	string res;
+	char res;
 	do {
 		restart = false;
 		reset();
@@ -219,14 +221,13 @@ int main() {
 		}
 
 		system ("CLS");
-		cout << "Game Over...	You Scored: " << score << " Points" << ", the fruit is at " << fruitX << ", " << fruitY << endl << endl;
+		cout << endl << endl << "Game Over...	You Scored: " << score << " Points" << endl << endl;
 		cout << "Press 'R' to play again." << endl;
 		cin >> res;
-		if(res == "r" || res == "R") {
+		if(res == 'r' || res == 'R') {
 			restart = true;
 			gameOver = false;
 		}
-		system ("PAUSE");
 
 	} while (restart);
 
