@@ -18,7 +18,7 @@ using namespace std;
 bool beginGame, gameOver;
 const int width = 20, height = 20;
 int x, y, fruitX, fruitY, score;
-int tailX[100], tailY[100];
+int tailX[400], tailY[400];
 int nTails;
 enum eDirection {STOP = 0, UP, DOWN, LEFT, RIGHT};
 eDirection dir;
@@ -58,7 +58,7 @@ void Draw() {
 
 	// This is the startup screen in the beginning of the game... :)
 	if (beginGame) {
-		cout << "Press any button to play :)" << endl << endl;
+		cout << endl << "Press any button to play :)" << endl << endl;
 		system ("PAUSE");
 		beginGame = false;
 	}
@@ -66,7 +66,7 @@ void Draw() {
 	// This clears the screen... Though it's not very good lol I'm so lonely...
 	system ("CLS");
 
-	cout << endl << endl << "Score: " << score << endl;
+	cout << endl << "Score: " << score << endl;
 	// This is the logic to draw the 20x20 grid aka the barriers...
 	for(int j = 0 ; j < height ; ++j) {
 
@@ -77,7 +77,7 @@ void Draw() {
 		   else if(i == fruitX && j == fruitY)
 			   cout << "$ ";
 		   else if(i == x && j == y)
-			   cout << "O ";
+			   cout << "0 ";
 		   else {
 			   bool print = false;
 			   for (int k = 0; k < nTails; ++k) {
@@ -199,7 +199,6 @@ void reset() {
 		tailX[i] = NULL;
 		tailY[i] = NULL;
 	}
-//	CreateFruitLoc();
 	nTails = 0;
 	score = 0;
 
@@ -221,12 +220,15 @@ int main() {
 		}
 
 		system ("CLS");
-		cout << endl << endl << "Game Over...	You Scored: " << score << " Points" << endl << endl;
+		cout << "# # # # # # # # # # # # # # # # # # # #" << endl;
+		cout << endl << "Game Over...	You Scored: " << score << " Points" << endl;
 		cout << "Press 'R' to play again." << endl;
+		cout << endl << "# # # # # # # # # # # # # # # # # # # #" << endl;
 		cin >> res;
 		if(res == 'r' || res == 'R') {
 			restart = true;
 			gameOver = false;
+			system ("CLS");
 		}
 
 	} while (restart);
